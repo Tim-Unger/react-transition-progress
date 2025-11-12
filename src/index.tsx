@@ -221,26 +221,17 @@ export function ProgressBar({
     );
 }
 
-type ProgressControls = {
-    start: () => void;
-    complete: () => void;
-};
-
+type StartProgress = () => void
 /**
- * A custom hook that returns functions to control the progress. Call the start function in a transition to track it, and call complete when the operation finishes.
+ * A custom hook that returns a function to start the progress. Call the start function in a transition to track it.
  *
- * @returns An object with start and complete functions to control the progress.
+ * @returns The function to start the progress. Call this function in a transition to track it.
  */
-export function useProgress(): ProgressControls {
+export function useProgress(): StartProgress {
     const progress = useProgressBarContext();
 
-    const startProgress = () => {
+    const startProgress: StartProgress = () => {
         progress.start();
-    };
-
-    const completeProgress = () => {
-        progress.complete();
-    };
-
-    return { start: startProgress, complete: completeProgress };
+    }
+    return startProgress
 }
